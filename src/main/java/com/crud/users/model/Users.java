@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User {
+public class Users {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -64,7 +64,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;

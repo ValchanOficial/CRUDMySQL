@@ -12,43 +12,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crud.users.model.User;
-import com.crud.users.repository.UserRepository;
+import com.crud.users.model.Users;
+import com.crud.users.repository.UsersRepository;
 
 @RestController
 @RequestMapping({"/users"})
-public class UserController {
+public class UsersController {
 
-	private UserRepository userRepository;
+	private UsersRepository userRepository;
 	
-	public UserController(UserRepository userRepository) {
+	public UsersController(UsersRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 	
 	@GetMapping
-	public List<User> findAll(){
+	public List<Users> findAll(){
 	   return userRepository.findAll();
 	}
 	
 	@GetMapping(path = {"/{id}"})
-	public ResponseEntity<User> findById(@PathVariable long id){
+	public ResponseEntity<Users> findById(@PathVariable long id){
 	   return userRepository.findById(id)
 	           .map(record -> ResponseEntity.ok().body(record))
 	           .orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public User create(@RequestBody User contact){
+	public Users create(@RequestBody Users contact){
 	   return userRepository.save(contact);
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<User> update(@PathVariable("id") long id, @RequestBody User user) {
+	public ResponseEntity<Users> update(@PathVariable("id") long id, @RequestBody Users user) {
 	   return userRepository.findById(id)
 	           .map(record -> {
 	               record.setNome(user.getNome());
 	               record.setEmail(user.getEmail());
-	               User updated = userRepository.save(record);
+	               Users updated = userRepository.save(record);
 	               return ResponseEntity.ok().body(updated);})
 	           .orElse(ResponseEntity.notFound().build());
 	}
